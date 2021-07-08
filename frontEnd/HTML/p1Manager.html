@@ -10,7 +10,12 @@
 <body>
     <div class="container">
         <div class="i1">
-            <h1>Shadow<br>Riembursements</h1>
+            <div class="pageTitle">
+                <h1>Shadow<br>Riembursements</h1>
+            </div>
+            <div class="homeLink">
+                <a href="/HTML/p1Index.html" id="returnHome">Home</a>
+            </div>
         </div>
         <div class="i2">
           <div class="i4"> <label id="l4"><b>Pending<br>Requests</b></label> </div>
@@ -21,29 +26,20 @@
             <div id="i7">
                 <h1>Pending Requests</h1>
                 <div>
-                    <ul>
+                    <ul id="pendingList">
                         <li>Req 1</li>
                         <li>Req 2</li>
                         <li>Req 3</li>
                         <li>Req 4</li>
                         <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
+                  
                     </ul>
                 </div>
             </div>
             <div id="i8">
                 <h1>Past Requests</h1>
                 <div>
-                    <ul>
+                    <ul id="pastList">
                         <li>Req 1</li>
                         <li>Req 2</li>
                         <li>Req 3</li>
@@ -65,7 +61,7 @@
             <div id="i9">
                 <h1 id="header">Request Approval</h1>
                 <div class="requestBox">
-                    <div id="reqLabel"><label for="requests">Reimbursement Requests: </label></div>
+                    <div id="reqLabel"><label for="requests" name="reqLabel">Reimbursement Requests: </label></div>
                     <input id="requests" type="text" name="requests" list="requestList">
                     <datalist id="requestList">
                         <option value="1">1</option>
@@ -76,10 +72,10 @@
                 </div>
                 <div class="buttons">
                     <span id="accept">
-                        <button id="acceptButton">Accept</button>
+                        <button id="acceptButton" name="acceptButton" type="button">Accept</button>
                     </span>
                     <span id="reject">
-                        <button id="rejectButton">Reject</button>
+                        <button id="rejectButton" name="rejectButton" type="button">Reject</button>
                     </span>
                 </div>
             </div>

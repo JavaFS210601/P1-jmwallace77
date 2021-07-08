@@ -109,5 +109,45 @@ html{
     height: 35%;
     width: auto;
     padding: 0 1rem 0 1rem;
+    cursor: pointer;
   }
+
+  
+  /* width */
+::-webkit-scrollbar {
+  width: 1.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: black;
+  border-radius: 20rem;
+  box-shadow: 0rem 0rem .1rem rgb(249, 255, 170),
+  -.1rem .1rem .5rem rgb(249, 255, 170),
+  -.2rem .2rem 1rem rgb(249, 255, 170);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+  border-radius: 20rem;
+  box-shadow: inset 0rem 0rem .1rem rgb(249, 255, 170),
+  inset -.1rem .1rem .5rem rgb(249, 255, 170),
+  inset -.2rem .2rem 1rem rgb(249, 255, 170);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+  box-shadow: inset 0rem 0rem .1rem rgb(249, 255, 170),
+  inset -.1rem .1rem .5rem rgb(249, 255, 170),
+  inset -.2rem .2rem 1rem rgb(249, 255, 170);
+}
+
+::-webkit-scrollbar-corner{
+  background: black;
+  box-shadow: inset 0rem 0rem .1rem rgb(249, 255, 170),
+  inset -.1rem .1rem .5rem rgb(249, 255, 170),
+  inset -.2rem .2rem 1rem rgb(249, 255, 170);
+}
   

@@ -25,11 +25,12 @@ html{
   
   .i1 {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
+    grid-auto-rows: 1fr; 
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
+  grid-template-rows: 1fr; 
+  gap: 0px 0px; 
     grid-template-areas:
-      "i1 . . . . . . . .";
+      "pageTitle . . . . . . . homeLink";
     background-color:rgba(0, 0, 0, 0.849);
     border: .2rem solid black;
     color:black;
@@ -40,19 +41,42 @@ html{
     box-shadow: 0rem 0rem .1rem rgb(249, 255, 170),
     -.1rem .1rem .5rem rgb(249, 255, 170),
     -.2rem .2rem 1rem rgb(249, 255, 170);
+    justify-self: start; 
+    align-self: center;
     grid-area: i1;
     width: 100%;
     height: 100%;
   }
 
-  .i1 h1{
-    box-shadow: 0rem 0rem .1rem rgb(249, 255, 170),
-    -.1rem .1rem .5rem rgb(249, 255, 170),
-    -.2rem .2rem 1rem rgb(249, 255, 170);
-      margin: -.5rem 0rem -.1rem -.77rem;
+  .pageTitle {
+     grid-area: pageTitle; 
+  }
+
+  .homeLink { 
+    grid-area: homeLink; 
+    grid-auto-columns: 1fr; 
+    grid-auto-rows: 1fr; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 0px;
+    justify-self: center;
+    align-self: center;
+    grid-area: homeLink;
+    background-color: rgba(0, 0, 0, 0.849);
+    font-size: 3rem;
+  }
+
+  .i1 div.pageTitle h1{
+   
+      margin: 0rem 0rem -.1rem -.77rem;
       padding-left: 2rem;
       padding-right: 2rem;
-      border: .2rem solid black;
+      
+  }
+
+  .i1 div.homeLink a#returnHome{
+    text-decoration: none;
+    color: black;
   }
 
   .i2 {
@@ -141,8 +165,7 @@ html{
   }
 
   .i4 label{
-    padding-left: .3rem;
-    padding-right: .3rem;
+    
       font-size: 2.3rem;
       box-shadow: 0rem 0rem .1rem rgb(249, 255, 170),
     -.1rem .1rem .5rem rgb(249, 255, 170),
@@ -155,8 +178,7 @@ html{
   }
 
   .i5 label{
-    padding-left: .3rem;
-    padding-right: .3rem;
+    
     font-size: 2.3rem;
     box-shadow: 0rem 0rem .1rem rgb(249, 255, 170),
     -.1rem .1rem .5rem rgb(249, 255, 170),
@@ -169,8 +191,7 @@ html{
  }
 
  .i6 label{
-    padding-left: .3rem;
-    padding-right: .3rem;
+    
     font-size: 2.3rem;
     box-shadow: 0rem 0rem .1rem rgb(249, 255, 170),
     -.1rem .1rem .5rem rgb(249, 255, 170),
@@ -193,6 +214,7 @@ html{
                 -.1rem .1rem .5rem black,
                 -.2rem .2rem 1rem black;
     border: .2rem solid black;
+    cursor: pointer;
  }
 
  .i5 label:hover{
@@ -206,6 +228,7 @@ html{
                 -.1rem .1rem .5rem black,
                 -.2rem .2rem 1rem black;
     border: .2rem solid black;
+    cursor: pointer;
  }
 
  .i6 label:hover{
@@ -219,6 +242,7 @@ html{
                 -.1rem .1rem .5rem black,
                 -.2rem .2rem 1rem black;
     border: .2rem solid black;
+    cursor: pointer;
  }
 
 #i7 {
@@ -389,6 +413,7 @@ html{
     font-size: 3rem;
     margin: 0 1.5rem 0 0;
     height: 50%;
+    cursor: pointer;
   }
   #i9 div.buttons #reject #rejectButton{
     background-color: rgb(249, 255, 170);
