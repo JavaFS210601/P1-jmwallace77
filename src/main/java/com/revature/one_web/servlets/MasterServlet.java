@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.revature.one_web.controllers.EmployeeController;
 import com.revature.one_web.controllers.LoginController;
 
 public class MasterServlet extends HttpServlet {
 	
 	//my controllers
 	private LoginController loginC = new LoginController();
+	private EmployeeController employeeC = new EmployeeController();
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		servletSwitch(req, res);
@@ -34,6 +36,7 @@ public class MasterServlet extends HttpServlet {
 				loginC.login(req, res);
 				break;
 			case "employee":
+				employeeC.submitRequest(req, res);
 				break;
 			case "manager":
 				break;

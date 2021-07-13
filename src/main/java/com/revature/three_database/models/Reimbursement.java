@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,43 +20,39 @@ public class Reimbursement {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "reimb_id")
 	private int id;
 	
-	@Column(name = "amount", nullable = false)
+	@Column(name = "reimb_amount", nullable = false)
 	private int amount;
 	
-	@Column(name = "submitted", nullable = false)
+	@Column(name = "reimb_submitted", nullable = false)
 	private LocalDateTime submitted;
 	
-	@Column(name = "resolved")
+	@Column(name = "reimb_resolved")
 	private LocalDateTime resolved;
 	
-	@Column(name = "resolved")
+	@Column(name = "reimb_description")
 	private String description;
 	
-	@Column(name = "reciept")
+	@Column(name = "reimb_receipt")
 	private byte[] reciept;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id")
-	@Column(name = "author", nullable = false)
-	private int author;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ers_users_id")
+	private Users author;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_id")
-	@Column(name = "resolver")
-	private int resolver;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ers_users_id", insertable=false, updatable=false)
+	private Users resolver;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "status_id")
-	@Column(name = "reimb_status_id", nullable = false)
-	private int statusId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reimb_status_id")
+	private ReimbursementStatus statusId;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "type_id")
-	@Column(name = "reimb_type_id", nullable = false)
-	private int typeId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "reimb_type_id")
+	private ReimbursementType typeId;
 
 	public Reimbursement() {
 		super();
@@ -64,7 +60,7 @@ public class Reimbursement {
 	}
 
 	public Reimbursement(int id, int amount, LocalDateTime submitted, LocalDateTime resolved, String description,
-			byte[] reciept, int author, int resolver, int statusId, int typeId) {
+			byte[] reciept, Users author, Users resolver, ReimbursementStatus statusId, ReimbursementType typeId) {
 		super();
 		this.id = id;
 		this.amount = amount;
@@ -79,7 +75,7 @@ public class Reimbursement {
 	}
 
 	public Reimbursement(int amount, LocalDateTime submitted, LocalDateTime resolved, String description,
-			byte[] reciept, int author, int resolver, int statusId, int typeId) {
+			byte[] reciept, Users author, Users resolver, ReimbursementStatus statusId, ReimbursementType typeId) {
 		super();
 		this.amount = amount;
 		this.submitted = submitted;
@@ -91,12 +87,24 @@ public class Reimbursement {
 		this.statusId = statusId;
 		this.typeId = typeId;
 	}
+	
+	
+
+	public Reimbursement(int amount, LocalDateTime submitted, Users author, ReimbursementStatus statusId,
+			ReimbursementType typeId) {
+		super();
+		this.amount = amount;
+		this.submitted = submitted;
+		this.author = author;
+		this.statusId = statusId;
+		this.typeId = typeId;
+	}
 
 	@Override
 	public String toString() {
 		return "Reimbursement [id=" + id + ", amount=" + amount + ", submitted=" + submitted + ", resolved=" + resolved
-				+ ", description=" + description + ", reciept=" + Arrays.toString(reciept) + ", author=" + author
-				+ ", resolver=" + resolver + ", statusId=" + statusId + ", typeId=" + typeId + "]";
+				+ ", description=" + description + ", reciept=" + Arrays.toString(reciept) + ", author=" + author.getId()
+				+ ", resolver=" + resolver.getId() + ", statusId=" + statusId + ", typeId=" + typeId + "]";
 	}
 
 	@Override
@@ -104,15 +112,15 @@ public class Reimbursement {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + amount;
-		result = prime * result + author;
+		result = prime * result + ((author == null) ? 0 : author.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + Arrays.hashCode(reciept);
 		result = prime * result + ((resolved == null) ? 0 : resolved.hashCode());
-		result = prime * result + resolver;
-		result = prime * result + statusId;
+		result = prime * result + ((resolver == null) ? 0 : resolver.hashCode());
+		result = prime * result + ((statusId == null) ? 0 : statusId.hashCode());
 		result = prime * result + ((submitted == null) ? 0 : submitted.hashCode());
-		result = prime * result + typeId;
+		result = prime * result + ((typeId == null) ? 0 : typeId.hashCode());
 		return result;
 	}
 
@@ -127,7 +135,10 @@ public class Reimbursement {
 		Reimbursement other = (Reimbursement) obj;
 		if (amount != other.amount)
 			return false;
-		if (author != other.author)
+		if (author == null) {
+			if (other.author != null)
+				return false;
+		} else if (!author.equals(other.author))
 			return false;
 		if (description == null) {
 			if (other.description != null)
@@ -143,16 +154,25 @@ public class Reimbursement {
 				return false;
 		} else if (!resolved.equals(other.resolved))
 			return false;
-		if (resolver != other.resolver)
+		if (resolver == null) {
+			if (other.resolver != null)
+				return false;
+		} else if (!resolver.equals(other.resolver))
 			return false;
-		if (statusId != other.statusId)
+		if (statusId == null) {
+			if (other.statusId != null)
+				return false;
+		} else if (!statusId.equals(other.statusId))
 			return false;
 		if (submitted == null) {
 			if (other.submitted != null)
 				return false;
 		} else if (!submitted.equals(other.submitted))
 			return false;
-		if (typeId != other.typeId)
+		if (typeId == null) {
+			if (other.typeId != null)
+				return false;
+		} else if (!typeId.equals(other.typeId))
 			return false;
 		return true;
 	}
@@ -205,37 +225,38 @@ public class Reimbursement {
 		this.reciept = reciept;
 	}
 
-	public int getAuthor() {
+	public Users getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(int author) {
+	public void setAuthor(Users author) {
 		this.author = author;
 	}
 
-	public int getResolver() {
+	public Users getResolver() {
 		return resolver;
 	}
 
-	public void setResolver(int resolver) {
+	public void setResolver(Users resolver) {
 		this.resolver = resolver;
 	}
 
-	public int getStatusId() {
+	public ReimbursementStatus getStatusId() {
 		return statusId;
 	}
 
-	public void setStatusId(int statusId) {
+	public void setStatusId(ReimbursementStatus statusId) {
 		this.statusId = statusId;
 	}
 
-	public int getTypeId() {
+	public ReimbursementType getTypeId() {
 		return typeId;
 	}
 
-	public void setTypeId(int typeId) {
+	public void setTypeId(ReimbursementType typeId) {
 		this.typeId = typeId;
 	}
+
 	
 	
 }

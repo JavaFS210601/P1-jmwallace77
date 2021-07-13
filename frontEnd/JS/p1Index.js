@@ -21,12 +21,20 @@ async function login(){
     if(response.status === 200){
         let data = await response.json();
 
-            if(data === "employee"){
+        let userInfo = data.split(",");
+        console.log(userInfo);
+
+        for(let info of userInfo){
+            if(info === "employee"){
+                localStorage.setItem('userData', userInfo)
                 location.replace("http://127.0.0.1:5500/HTML/p1Employee.html");
             }
-            if(data === "manager"){
+            if(info === "manager"){
+                localStorage.setItem('userData', userInfo)
                 location.replace("http://127.0.0.1:5500/HTML/p1Manager.html");
             }   
+        }
+
     }
 
 }

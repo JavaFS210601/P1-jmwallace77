@@ -10,7 +10,7 @@
        		<property name="hibernate.connection.url">jdbc:postgresql://javafsp1.cen4ygabfg2t.us-east-2.rds.amazonaws.com:5432/postgres?currentSchema=p1</property>
        		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
        		
-       		<property name="hibernate.dialect">org.hibernate.dialect.PostgeSQLDialect</property>
+       		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
        		<property name="hibernate.default_schema">p1</property>
        		
        		<property name="hibernate.show_sql">true</property>
@@ -18,6 +18,11 @@
        		
        		<property name="hibernate.hbm2ddl.auto">update</property>
        		
+       		<mapping class="com.revature.three_database.models.UserRoles"/>
+       		<mapping class="com.revature.three_database.models.ReimbursementStatus"/>
+       		<mapping class="com.revature.three_database.models.ReimbursementType"/>
+       		<mapping class="com.revature.three_database.models.Users"/>
+       		<mapping class="com.revature.three_database.models.Reimbursement"/>
        		
        		
        	</session-factory>

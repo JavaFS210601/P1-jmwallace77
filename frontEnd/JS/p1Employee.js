@@ -139,6 +139,36 @@ function tab9Switch(){
     }
 }
 
+const url = 'http://localhost:8080/P1-jmwallace77/';
+
+document.getElementById("submitButton").addEventListener("click", requestSubmit);
+
+async function requestSubmit(){
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let optionsList = document.getElementById("optionsList");
+    let requestAmount = document.getElementById("amount").value;
+    let userData = localStorage.getItem("userData").split(",");
+
+    let userSubmission = {
+        firstName: firstName,
+        lastName: lastName,
+        reimbType: optionsList.options[optionsList.selectedIndex].value,
+        amount: requestAmount,
+        userId: userData[1]
+    }
+
+    let response = await fetch(url + "employee", {
+        method: "POST",
+        body: JSON.stringify(userSubmission),
+        credentials: 'include'
+    });
+
+    if(response.status === 200){
+        console.log("Success YAY!");
+    }
+}
+
 
 
 

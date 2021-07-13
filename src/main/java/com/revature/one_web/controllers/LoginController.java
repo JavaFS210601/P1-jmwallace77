@@ -7,9 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Session;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.LoginDTO;
+import com.revature.three_database.models.UserRoles;
+import com.revature.three_database.models.Users;
 import com.revature.two_service.services.LoginService;
+import com.revature.utils.HibernateUtil;
 
 public class LoginController {
 	//my object mapper and service provider
@@ -39,14 +44,20 @@ public class LoginController {
 			//mapping the JAVA string to the loginDTO object
 			LoginDTO lgDTO = objMapper.readValue(sBody, LoginDTO.class);
 			
-			if(loginService.login(lgDTO.getUsername(), lgDTO.getPassword())) {
+			Users user = loginService.login(lgDTO.getUsername(), lgDTO.getPassword());
+			
+			if(user != null) {
+				
+				Session roleSession = HibernateUtil.getSession();
+				
+				UserRoles role = loginService.getRole(user, roleSession);
 				
 				HttpSession loginSession = req.getSession();
 				
 				loginSession.setAttribute("user", lgDTO);
 				loginSession.setAttribute("valid", true);
-				
-				String json = objMapper.writeValueAsString("manager");
+				loginSession.setAttribute("userType", role.getRole());
+				String json = objMapper.writeValueAsString(role.getRole() + "," + user.getId());
 				
 				res.setStatus(200);
 				res.getWriter().print(json);

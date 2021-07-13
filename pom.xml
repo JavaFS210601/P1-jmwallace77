@@ -40,9 +40,9 @@
 	</dependency>
 	
 	<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.4.26.Final</version>
+		<groupId>org.hibernate</groupId>
+		<artifactId>hibernate-core</artifactId>
+		<version>5.4.26.Final</version>
 	</dependency>
 		
   </dependencies>

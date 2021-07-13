@@ -426,6 +426,36 @@ html{
     border-radius: 20rem;
   }
 
+  #i9 span.requestBox{
+    font-size: 2.5rem;
+    justify-self: center;
+    color:rgb(249, 255, 170);
+    text-shadow: 0rem 0rem .1rem black,
+                -.1rem .1rem .5rem black,
+                -.2rem .2rem 1rem black,
+                -.3rem .3rem 1.5rem black;
+    margin-bottom: -10rem;
+  }
+
+  #i9 span.optionsBox #optionsList {
+    background-color: black;
+    color:rgb(249, 255, 170);
+    text-shadow: 0rem 0rem .1rem black,
+                -.1rem .1rem .5rem black,
+                -.2rem .2rem 1rem black,
+                -.3rem .3rem 1.5rem black;
+    box-shadow: 0rem 0rem .1rem black,
+                -.1rem .1rem .5rem black,
+                -.2rem .2rem 1rem black;
+    border: .2rem solid black;
+    width: 20rem;
+    height: 15%;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 20rem;
+    align-self: center;
+  }
+
   #i9 div.inputs #total #amount{
     background-color: black;
     color:rgb(249, 255, 170);

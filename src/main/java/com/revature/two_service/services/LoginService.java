@@ -1,14 +1,31 @@
 package com.revature.two_service.services;
 
-public class LoginService {
+import org.hibernate.Session;
 
-	public boolean login(String username, String password) {
-		
-		if(username.equals("username") && password.equals("password")) {
-			return true;
+import com.revature.three_database.dao.LoginDAO;
+import com.revature.three_database.models.UserRoles;
+import com.revature.three_database.models.Users;
+
+public class LoginService {
+	
+	//DAO's used by the service
+	private LoginDAO loginDAO = new LoginDAO();
+	
+	public Users login(String username, String password) {
+		Users user = loginDAO.retrieveCredentials(username, password);
+		if(user != null) {
+			return user;
 		}
 		
-		return false;
+		return null;
+	}
+
+	public UserRoles getRole(Users user, Session roleSession) {
+		UserRoles role = loginDAO.retrieveRoles(user, roleSession);
+		if(role != null) {
+			return role;
+		}
+		return null;
 	}
 
 }

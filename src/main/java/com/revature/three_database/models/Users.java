@@ -1,5 +1,8 @@
 package com.revature.three_database.models;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,37 +11,43 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ers_users")
-public class Users {
-	
+public class Users implements Serializable{
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id")
+	@Column(name = "ers_users_id")
 	private int id;
 	
-	@Column(name = "username", unique = true, nullable = false)
+	@Column(name = "ers_username", unique = true, nullable = false)
 	private String username;
 	
-	@Column(name = "password", nullable = false)
+	@Column(name = "ers_password", nullable = false)
 	private String password;
 	
-	@Column(name = "first_name", nullable = false)
+	@Column(name = "user_first_name", nullable = false)
 	private String firstName;
 	
-	@Column(name = "last_name", nullable = false)
+	@Column(name = "user_last_name", nullable = false)
 	private String lastName;
 	
-	@Column(name = "email", unique = true, nullable = false)
+	@Column(name = "user_email", unique = true, nullable = false)
 	private String email;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "user_role_id")
-	@Column(name = "role_id", nullable = false)
-	private int roleId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ers_user_role_id")
+	private UserRoles roleId;
+	
+	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
+	private List<Reimbursement> reimbSubmittedList;
+
+	@OneToMany(mappedBy="resolver", fetch=FetchType.EAGER)
+	private List<Reimbursement> reimbResolvedList;
 
 	public Users() {
 		super();
@@ -46,7 +55,7 @@ public class Users {
 	}
 
 	public Users(int id, String username, String password, String firstName, String lastName, String email,
-			int roleId) {
+			UserRoles roleId, List<Reimbursement> reimbSubmittedList, List<Reimbursement> reimbResolvedList) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -55,9 +64,12 @@ public class Users {
 		this.lastName = lastName;
 		this.email = email;
 		this.roleId = roleId;
+		this.reimbSubmittedList = reimbSubmittedList;
+		this.reimbResolvedList = reimbResolvedList;
 	}
 
-	public Users(String username, String password, String firstName, String lastName, String email, int roleId) {
+	public Users(String username, String password, String firstName, String lastName, String email, UserRoles roleId,
+			List<Reimbursement> reimbSubmittedList, List<Reimbursement> reimbResolvedList) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -65,12 +77,15 @@ public class Users {
 		this.lastName = lastName;
 		this.email = email;
 		this.roleId = roleId;
+		this.reimbSubmittedList = reimbSubmittedList;
+		this.reimbResolvedList = reimbResolvedList;
 	}
 
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", roleId=" + roleId + "]";
+				+ ", lastName=" + lastName + ", email=" + email + ", roleId=" + roleId.getId() + ", reimbSubmittedList="
+				+ reimbSubmittedList + ", reimbResolvedList=" + reimbResolvedList + "]";
 	}
 
 	@Override
@@ -82,7 +97,9 @@ public class Users {
 		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + roleId;
+		result = prime * result + ((reimbResolvedList == null) ? 0 : reimbResolvedList.hashCode());
+		result = prime * result + ((reimbSubmittedList == null) ? 0 : reimbSubmittedList.hashCode());
+		result = prime * result + ((roleId == null) ? 0 : roleId.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -118,7 +135,20 @@ public class Users {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (roleId != other.roleId)
+		if (reimbResolvedList == null) {
+			if (other.reimbResolvedList != null)
+				return false;
+		} else if (!reimbResolvedList.equals(other.reimbResolvedList))
+			return false;
+		if (reimbSubmittedList == null) {
+			if (other.reimbSubmittedList != null)
+				return false;
+		} else if (!reimbSubmittedList.equals(other.reimbSubmittedList))
+			return false;
+		if (roleId == null) {
+			if (other.roleId != null)
+				return false;
+		} else if (!roleId.equals(other.roleId))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -176,12 +206,28 @@ public class Users {
 		this.email = email;
 	}
 
-	public int getRoleId() {
+	public UserRoles getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(int roleId) {
+	public void setRoleId(UserRoles roleId) {
 		this.roleId = roleId;
+	}
+
+	public List<Reimbursement> getReimbSubmittedList() {
+		return reimbSubmittedList;
+	}
+
+	public void setReimbSubmittedList(List<Reimbursement> reimbSubmittedList) {
+		this.reimbSubmittedList = reimbSubmittedList;
+	}
+
+	public List<Reimbursement> getReimbResolvedList() {
+		return reimbResolvedList;
+	}
+
+	public void setReimbResolvedList(List<Reimbursement> reimbResolvedList) {
+		this.reimbResolvedList = reimbResolvedList;
 	}
 	
 	
