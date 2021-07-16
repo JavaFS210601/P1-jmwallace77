@@ -10,7 +10,9 @@ let tabl6Style = document.getElementById("l6");
 
 //event listeners
 document.getElementById("l4").addEventListener("click", tab7Switch);
+document.getElementById("l4").addEventListener("click", getPendingRequests);
 document.getElementById("l5").addEventListener("click", tab8Switch);
+document.getElementById("l5").addEventListener("click", getPastRequests);
 document.getElementById("l6").addEventListener("click", tab9Switch);
 
 //onClick function
@@ -158,7 +160,7 @@ async function requestSubmit(){
         userId: userData[1]
     }
 
-    let response = await fetch(url + "employee", {
+    let response = await fetch(url + "employeeSubmitRequest", {
         method: "POST",
         body: JSON.stringify(userSubmission),
         credentials: 'include'
@@ -168,6 +170,80 @@ async function requestSubmit(){
         console.log("Success YAY!");
     }
 }
+
+async function getPendingRequests(){
+
+    let id = localStorage.getItem("userData").split(",");
+
+    let userId = {
+        userId: id[1]
+    }
+
+    let response = await fetch(url + "employeeGetPending", {
+        method: "POST",
+        body: JSON.stringify(userId)
+    });
+
+    if(response.status === 200){
+
+        console.log(response);
+
+        data = await response.json();
+
+        let pendingList = document.getElementById("pendingList")
+
+        while( pendingList.firstChild ){
+            pendingList.removeChild( pendingList.firstChild );
+        }
+        
+        for(let pendingReimb of data){
+
+            let listItem = document.createElement('li');
+            listItem.innerHTML = pendingReimb.typeId.type + " amount: $" + pendingReimb.amount + " for: " + pendingReimb.author.firstName + " " + pendingReimb.author.lastName;
+            pendingList.appendChild(listItem);
+
+        }
+
+    }
+}
+
+
+async function getPastRequests(){
+
+    let id = localStorage.getItem("userData").split(",");
+
+    let userId = {
+        userId: id[1]
+    }
+
+    let response = await fetch(url + "employeeGetPast", {
+        method: "POST",
+        body: JSON.stringify(userId)
+    });
+
+    if(response.status === 200){
+
+        console.log(response);
+
+        data = await response.json();
+
+        let pastList = document.getElementById("pastList")
+
+        while( pastList.firstChild ){
+            pastList.removeChild( pastList.firstChild );
+        }
+        
+        for(let pastReimb of data){
+
+            let listItem = document.createElement('li');
+            listItem.innerHTML = pastReimb.typeId.type + " amount: $" + pastReimb.amount + " for: " + pastReimb.author.firstName + " " + pastReimb.author.lastName;
+            pastList.appendChild(listItem);
+
+        }
+
+    }
+}
+
 
 
 

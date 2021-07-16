@@ -23,31 +23,31 @@ public class UserRoles {
 	@Column(name = "user_role", nullable = false)
 	private String role;
 
-	@OneToMany(mappedBy="roleId", fetch=FetchType.EAGER)
-	private List<Users> usersList;
 
 	public UserRoles() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserRoles(int id, String role, List<Users> usersList) {
+
+	public UserRoles(int id, String role) {
 		super();
 		this.id = id;
 		this.role = role;
-		this.usersList = usersList;
 	}
 
-	public UserRoles(String role, List<Users> usersList) {
+
+	public UserRoles(String role) {
 		super();
 		this.role = role;
-		this.usersList = usersList;
 	}
+
 
 	@Override
 	public String toString() {
-		return "UserRoles [id=" + id + ", role=" + role + ", usersList=" + usersList + "]";
+		return "UserRoles [id=" + id + ", role=" + role + "]";
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -55,9 +55,9 @@ public class UserRoles {
 		int result = 1;
 		result = prime * result + id;
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + ((usersList == null) ? 0 : usersList.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -75,38 +75,29 @@ public class UserRoles {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
-		if (usersList == null) {
-			if (other.usersList != null)
-				return false;
-		} else if (!usersList.equals(other.usersList))
-			return false;
 		return true;
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 
 	public String getRole() {
 		return role;
 	}
 
+
 	public void setRole(String role) {
 		this.role = role;
 	}
 
-	public List<Users> getUsersList() {
-		return usersList;
-	}
-
-	public void setUsersList(List<Users> usersList) {
-		this.usersList = usersList;
-	}
-	
 	
 	
 }

@@ -322,7 +322,8 @@ html{
 
   #i7 div ul{
     direction:ltr;
-    padding-left: 5rem;
+    padding-left: 20rem;
+    font-size: 3rem;
   }
 
   #i8 h1{
@@ -351,7 +352,8 @@ html{
 
   #i8 div ul{
     direction:ltr;
-    padding-left: 5rem;
+    padding-left: 20rem;
+    font-size: 3rem;
   }
 
   #i9 h1{
@@ -375,6 +377,25 @@ html{
   }
 
   #i9 div.requestBox #requests {
+    background-color: black;
+    color:rgb(249, 255, 170);
+    text-shadow: 0rem 0rem .1rem black,
+                -.1rem .1rem .5rem black,
+                -.2rem .2rem 1rem black,
+                -.3rem .3rem 1.5rem black;
+    box-shadow: 0rem 0rem .1rem black,
+                -.1rem .1rem .5rem black,
+                -.2rem .2rem 1rem black;
+    border: .2rem solid black;
+    width: 60rem;
+    height: 15%;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 20rem;
+    align-self: center;
+  }
+
+  #i9 div.requestBox #requestList {
     background-color: black;
     color:rgb(249, 255, 170);
     text-shadow: 0rem 0rem .1rem black,

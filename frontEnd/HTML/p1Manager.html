@@ -27,12 +27,7 @@
                 <h1>Pending Requests</h1>
                 <div>
                     <ul id="pendingList">
-                        <li>Req 1</li>
-                        <li>Req 2</li>
-                        <li>Req 3</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                  
+                        
                     </ul>
                 </div>
             </div>
@@ -40,21 +35,7 @@
                 <h1>Past Requests</h1>
                 <div>
                     <ul id="pastList">
-                        <li>Req 1</li>
-                        <li>Req 2</li>
-                        <li>Req 3</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
-                        <li>Req 4</li>
+                       
                     </ul>
                 </div>
             </div>
@@ -62,13 +43,8 @@
                 <h1 id="header">Request Approval</h1>
                 <div class="requestBox">
                     <div id="reqLabel"><label for="requests" name="reqLabel">Reimbursement Requests: </label></div>
-                    <input id="requests" type="text" name="requests" list="requestList">
-                    <datalist id="requestList">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </datalist>
+                    <input id="requests" type="text" name="requests" list="requestList" value="" onfocus="this.value=''" onchange="this.blur();">
+                    <datalist id="requestList"></datalist>
                 </div>
                 <div class="buttons">
                     <span id="accept">

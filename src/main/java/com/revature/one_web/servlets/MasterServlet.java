@@ -9,12 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.revature.one_web.controllers.EmployeeController;
 import com.revature.one_web.controllers.LoginController;
+import com.revature.one_web.controllers.ManagerController;
 
 public class MasterServlet extends HttpServlet {
 	
 	//my controllers
 	private LoginController loginC = new LoginController();
 	private EmployeeController employeeC = new EmployeeController();
+	private ManagerController managerC = new ManagerController();
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		servletSwitch(req, res);
@@ -35,10 +37,26 @@ public class MasterServlet extends HttpServlet {
 			case "login":
 				loginC.login(req, res);
 				break;
-			case "employee":
+			case "employeeSubmitRequest":
 				employeeC.submitRequest(req, res);
 				break;
-			case "manager":
+			case "managerAcceptReimbursement":
+				managerC.acceptRequest(req, res);
+				break;
+			case "managerRejectReimbursement":
+				managerC.rejectRequest(req, res);
+				break;
+			case "managerGetPending":
+				managerC.getPendingReimbursements(req, res);
+				break;
+			case "managerGetPast":
+				managerC.getPastReimbursements(req,res);
+				break;
+			case "employeeGetPending":
+				employeeC.getPendingReimbursements(req, res);
+				break;
+			case "employeeGetPast":
+				employeeC.getPastReimbursements(req, res);
 				break;
 		}
 	}

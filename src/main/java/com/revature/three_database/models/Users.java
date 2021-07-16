@@ -39,15 +39,9 @@ public class Users implements Serializable{
 	@Column(name = "user_email", unique = true, nullable = false)
 	private String email;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = UserRoles.class)
 	@JoinColumn(name = "ers_user_role_id")
 	private UserRoles roleId;
-	
-	@OneToMany(mappedBy="author", fetch=FetchType.EAGER)
-	private List<Reimbursement> reimbSubmittedList;
-
-	@OneToMany(mappedBy="resolver", fetch=FetchType.EAGER)
-	private List<Reimbursement> reimbResolvedList;
 
 	public Users() {
 		super();
@@ -55,7 +49,7 @@ public class Users implements Serializable{
 	}
 
 	public Users(int id, String username, String password, String firstName, String lastName, String email,
-			UserRoles roleId, List<Reimbursement> reimbSubmittedList, List<Reimbursement> reimbResolvedList) {
+			UserRoles roleId) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -64,12 +58,9 @@ public class Users implements Serializable{
 		this.lastName = lastName;
 		this.email = email;
 		this.roleId = roleId;
-		this.reimbSubmittedList = reimbSubmittedList;
-		this.reimbResolvedList = reimbResolvedList;
 	}
 
-	public Users(String username, String password, String firstName, String lastName, String email, UserRoles roleId,
-			List<Reimbursement> reimbSubmittedList, List<Reimbursement> reimbResolvedList) {
+	public Users(String username, String password, String firstName, String lastName, String email, UserRoles roleId) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -77,15 +68,12 @@ public class Users implements Serializable{
 		this.lastName = lastName;
 		this.email = email;
 		this.roleId = roleId;
-		this.reimbSubmittedList = reimbSubmittedList;
-		this.reimbResolvedList = reimbResolvedList;
 	}
 
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", roleId=" + roleId.getId() + ", reimbSubmittedList="
-				+ reimbSubmittedList + ", reimbResolvedList=" + reimbResolvedList + "]";
+				+ ", lastName=" + lastName + ", email=" + email + ", roleId=" + roleId + "]";
 	}
 
 	@Override
@@ -97,8 +85,6 @@ public class Users implements Serializable{
 		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((reimbResolvedList == null) ? 0 : reimbResolvedList.hashCode());
-		result = prime * result + ((reimbSubmittedList == null) ? 0 : reimbSubmittedList.hashCode());
 		result = prime * result + ((roleId == null) ? 0 : roleId.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -134,16 +120,6 @@ public class Users implements Serializable{
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
-			return false;
-		if (reimbResolvedList == null) {
-			if (other.reimbResolvedList != null)
-				return false;
-		} else if (!reimbResolvedList.equals(other.reimbResolvedList))
-			return false;
-		if (reimbSubmittedList == null) {
-			if (other.reimbSubmittedList != null)
-				return false;
-		} else if (!reimbSubmittedList.equals(other.reimbSubmittedList))
 			return false;
 		if (roleId == null) {
 			if (other.roleId != null)
@@ -214,21 +190,6 @@ public class Users implements Serializable{
 		this.roleId = roleId;
 	}
 
-	public List<Reimbursement> getReimbSubmittedList() {
-		return reimbSubmittedList;
-	}
 
-	public void setReimbSubmittedList(List<Reimbursement> reimbSubmittedList) {
-		this.reimbSubmittedList = reimbSubmittedList;
-	}
-
-	public List<Reimbursement> getReimbResolvedList() {
-		return reimbResolvedList;
-	}
-
-	public void setReimbResolvedList(List<Reimbursement> reimbResolvedList) {
-		this.reimbResolvedList = reimbResolvedList;
-	}
-	
 	
 }

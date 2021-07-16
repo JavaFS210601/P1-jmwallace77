@@ -14,7 +14,7 @@ public class LoginDAO implements LoginInterface {
 		
 		Session session = HibernateUtil.getSession();
 
-		Users user = (Users) session.createQuery("FROM Users WHERE ers_username = ?1 AND ers_password = ?2")
+		Users user = (Users) session.createQuery("FROM Users WHERE username = ?1 AND password = ?2")
 				.setParameter(1, username).setParameter(2, password).uniqueResult();
 		
 		HibernateUtil.closeSession();
@@ -29,7 +29,7 @@ public class LoginDAO implements LoginInterface {
 	
 	@Override
 	public UserRoles retrieveRoles(Users user, Session roleSession) {
-		UserRoles role = (UserRoles) roleSession.createQuery("FROM UserRoles WHERE ers_user_role_id = ?1").setParameter(1, user.getId()).uniqueResult();
+		UserRoles role = (UserRoles) roleSession.createQuery("FROM UserRoles WHERE id = (SELECT roleId FROM Users WHERE id = ?1)").setParameter(1, user.getId()).uniqueResult();
 		if(role != null) {
 			return role;
 		}

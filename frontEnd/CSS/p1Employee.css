@@ -322,7 +322,8 @@ html{
 
   #i7 div ul{
     direction:ltr;
-    padding-left: 5rem;
+    padding-left: 20rem;
+    font-size: 3rem;
   }
 
   #i8 h1{
@@ -351,7 +352,8 @@ html{
 
   #i8 div ul{
     direction:ltr;
-    padding-left: 5rem;
+    padding-left: 20rem;
+    font-size: 3rem;
   }
 
   #i9 h1{

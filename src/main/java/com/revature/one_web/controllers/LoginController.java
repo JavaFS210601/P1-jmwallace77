@@ -51,6 +51,8 @@ public class LoginController {
 				Session roleSession = HibernateUtil.getSession();
 				
 				UserRoles role = loginService.getRole(user, roleSession);
+				HibernateUtil.closeSession();
+				
 				
 				HttpSession loginSession = req.getSession();
 				

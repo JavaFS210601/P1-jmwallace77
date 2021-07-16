@@ -3,7 +3,7 @@ package com.revature.three_database.models;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import javax.persistence.CascadeType;
+import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,19 +38,15 @@ public class Reimbursement {
 	@Column(name = "reimb_receipt")
 	private byte[] reciept;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Users.class)
 	@JoinColumn(name = "ers_users_id")
 	private Users author;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ers_users_id", insertable=false, updatable=false)
-	private Users resolver;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = ReimbursementStatus.class)
 	@JoinColumn(name = "reimb_status_id")
 	private ReimbursementStatus statusId;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = ReimbursementType.class)
 	@JoinColumn(name = "reimb_type_id")
 	private ReimbursementType typeId;
 
@@ -60,7 +56,7 @@ public class Reimbursement {
 	}
 
 	public Reimbursement(int id, int amount, LocalDateTime submitted, LocalDateTime resolved, String description,
-			byte[] reciept, Users author, Users resolver, ReimbursementStatus statusId, ReimbursementType typeId) {
+			byte[] reciept, Users author, ReimbursementStatus statusId, ReimbursementType typeId) {
 		super();
 		this.id = id;
 		this.amount = amount;
@@ -69,13 +65,12 @@ public class Reimbursement {
 		this.description = description;
 		this.reciept = reciept;
 		this.author = author;
-		this.resolver = resolver;
 		this.statusId = statusId;
 		this.typeId = typeId;
 	}
 
 	public Reimbursement(int amount, LocalDateTime submitted, LocalDateTime resolved, String description,
-			byte[] reciept, Users author, Users resolver, ReimbursementStatus statusId, ReimbursementType typeId) {
+			byte[] reciept, Users author, ReimbursementStatus statusId, ReimbursementType typeId) {
 		super();
 		this.amount = amount;
 		this.submitted = submitted;
@@ -83,12 +78,9 @@ public class Reimbursement {
 		this.description = description;
 		this.reciept = reciept;
 		this.author = author;
-		this.resolver = resolver;
 		this.statusId = statusId;
 		this.typeId = typeId;
 	}
-	
-	
 
 	public Reimbursement(int amount, LocalDateTime submitted, Users author, ReimbursementStatus statusId,
 			ReimbursementType typeId) {
@@ -99,12 +91,13 @@ public class Reimbursement {
 		this.statusId = statusId;
 		this.typeId = typeId;
 	}
+	
 
 	@Override
 	public String toString() {
 		return "Reimbursement [id=" + id + ", amount=" + amount + ", submitted=" + submitted + ", resolved=" + resolved
-				+ ", description=" + description + ", reciept=" + Arrays.toString(reciept) + ", author=" + author.getId()
-				+ ", resolver=" + resolver.getId() + ", statusId=" + statusId + ", typeId=" + typeId + "]";
+				+ ", description=" + description + ", reciept=" + Arrays.toString(reciept) + ", author=" + author
+				+ ", statusId=" + statusId + ", typeId=" + typeId + "]";
 	}
 
 	@Override
@@ -117,7 +110,6 @@ public class Reimbursement {
 		result = prime * result + id;
 		result = prime * result + Arrays.hashCode(reciept);
 		result = prime * result + ((resolved == null) ? 0 : resolved.hashCode());
-		result = prime * result + ((resolver == null) ? 0 : resolver.hashCode());
 		result = prime * result + ((statusId == null) ? 0 : statusId.hashCode());
 		result = prime * result + ((submitted == null) ? 0 : submitted.hashCode());
 		result = prime * result + ((typeId == null) ? 0 : typeId.hashCode());
@@ -153,11 +145,6 @@ public class Reimbursement {
 			if (other.resolved != null)
 				return false;
 		} else if (!resolved.equals(other.resolved))
-			return false;
-		if (resolver == null) {
-			if (other.resolver != null)
-				return false;
-		} else if (!resolver.equals(other.resolver))
 			return false;
 		if (statusId == null) {
 			if (other.statusId != null)
@@ -233,14 +220,6 @@ public class Reimbursement {
 		this.author = author;
 	}
 
-	public Users getResolver() {
-		return resolver;
-	}
-
-	public void setResolver(Users resolver) {
-		this.resolver = resolver;
-	}
-
 	public ReimbursementStatus getStatusId() {
 		return statusId;
 	}
@@ -257,6 +236,5 @@ public class Reimbursement {
 		this.typeId = typeId;
 	}
 
-	
 	
 }
